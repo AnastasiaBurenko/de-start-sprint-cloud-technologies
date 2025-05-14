@@ -1,1 +1,2 @@
-# de-start-sprint-cloud-technologies
+# sprint-9-project
+Репозиторий для разработки проекта 9-го спринта.
