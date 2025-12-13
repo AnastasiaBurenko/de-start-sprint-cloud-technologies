@@ -1,19 +1,41 @@
 from datetime import datetime
 from logging import Logger
-from uuid import UUID
 
 from lib.kafka_connect import KafkaConsumer
+from cdm_loader.repository.cdm_repository import OrderCdmBuilder, CdmRepository
 
 
 class CdmMessageProcessor:
     def __init__(self,
+                 consumer: KafkaConsumer,
+                 cdm_repo: CdmRepository,
+                 batch_size: int,
                  logger: Logger,
                  ) -> None:
 
+        self._consumer = consumer
+        self._cdm_repo = cdm_repo
         self._logger = logger
         self._batch_size = 100
 
     def run(self) -> None:
         self._logger.info(f"{datetime.utcnow()}: START")
+
+        for _ in range(self._batch_size):
+            msg = self._consumer.consume()
+
+            if not msg:
+                self._logger.info(f"{datetime.utcnow()}: There is no message")   
+                break
+
+            builder = OrderCdmBuilder(msg['payload'])
+
+            user_products = builder.user_product_counters()
+            for user_prod in user_products:
+                self._cdm_repo.user_prod_insert(user_prod)
+
+            user_categories = builder.user_category_counters()
+            for user_cat in user_categories:
+                self._cdm_repo.user_cat_insert(user_cat)
 
         self._logger.info(f"{datetime.utcnow()}: FINISH")
