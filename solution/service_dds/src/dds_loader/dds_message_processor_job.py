@@ -16,7 +16,7 @@ class DdsMessageProcessor:
         self._producer = producer
         self._dds_repo = dds_repo
         self._logger = logger
-        self._batch_size = 30
+        self._batch_size = batch_size
 
     def run(self) -> None:
         self._logger.info(f"{datetime.utcnow()}: START")

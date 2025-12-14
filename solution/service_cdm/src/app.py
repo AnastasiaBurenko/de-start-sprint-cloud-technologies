@@ -21,7 +21,10 @@ if __name__ == '__main__':
     app.logger.setLevel(logging.DEBUG)
 
     proc = CdmMessageProcessor(
-        app.logger
+        consumer=config.kafka_consumer(),
+        cdm_repo=CdmRepository(config.pg_warehouse_db()),
+        batch_size=30,
+        logger=app.logger
     )
 
     scheduler = BackgroundScheduler()

@@ -16,11 +16,11 @@ containerPort: 5000
 config:
   KAFKA_HOST: "rc1a-3g5f2bnes2btl8kl.mdb.yandexcloud.net"
   KAFKA_PORT: "9091"
-  KAFKA_CONSUMER_USERNAME: "producer_consumer"
-  KAFKA_CONSUMER_PASSWORD: "01091993"
-  KAFKA_CONSUMER_GROUP: "consumer-group"
+  KAFKA_USER: "producer_consumer"
+  KAFKA_PASSWORD: "01091993"
+  KAFKA_GROUP: "consumer-group"
   KAFKA_SOURCE_TOPIC: "order-service_orders"
-  KAFKA_DESTINATION_TOPIC: "stg-service-orders"
+  KAFKA_DDS_SERVICE_ORDERS_TOPIC: "dds-service-orders"
 
   REDIS_HOST: "c-c9qkqiuajtaa73q57eif.rw.mdb.yandexcloud.net"
   REDIS_PORT: "6380"
